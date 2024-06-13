@@ -2,12 +2,18 @@ package br.com.erudio.apijavaservice.domain;
 
 import br.com.erudio.apijavaservice.domain.enums.Prioridade;
 import br.com.erudio.apijavaservice.domain.enums.Status;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.PrimitiveIterator;
 
-public class Chamado {
+@Entity
+public class Chamado implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private LocalDate dataAbertura = LocalDate.now();
     private LocalDate dataFechamento;
@@ -16,7 +22,11 @@ public class Chamado {
     private String titulo;
     private String observacoes;
 
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
     private Tecnico tecnico;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
     public Chamado() {
