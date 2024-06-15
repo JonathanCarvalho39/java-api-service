@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/cliente", produces = {"application/json"})
+@RequestMapping(value = "api/v1/cliente", produces = {"application/json"})
 @Tag(name = "ApiService HelpDasck")
 public class ClienteResource {
 
