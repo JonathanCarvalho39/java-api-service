@@ -1,6 +1,7 @@
 package br.com.erudio.apijavaservice.services;
 
 import br.com.erudio.apijavaservice.domain.Tecnico;
+import br.com.erudio.apijavaservice.dtos.TecnicoDTO;
 import br.com.erudio.apijavaservice.repositores.TecnicoRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return repository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO obj) {
+        obj.setId(null);
+        Tecnico newObj = new Tecnico(obj);
+        return repository.save(newObj);
     }
 }
