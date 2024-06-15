@@ -26,7 +26,7 @@ public class ClienteResource {
             @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados")
     })
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Cliente> findById(@RequestParam("id") Integer id) {
+    public ResponseEntity<Cliente> findById(@PathVariable("id") Integer id) {
         Cliente obj = service.findById(id);
         return ResponseEntity.ok().body(obj);
     }

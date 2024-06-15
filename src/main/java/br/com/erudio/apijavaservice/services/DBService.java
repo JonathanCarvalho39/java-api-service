@@ -42,13 +42,8 @@ public class DBService {
         Chamado ch2 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado-02", "Segundo chamado", tecnico1, cliente);
         Chamado ch3 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-03", "Terceiro chamado", tecnico2, cliente);
 
-        tecnicoRepository.saveAll(Arrays.asList(tecnico));
-        tecnicoRepository.saveAll(Arrays.asList(tecnico1));
-        tecnicoRepository.saveAll(Arrays.asList(tecnico2));
-        tecnicoRepository.saveAll(Arrays.asList(tecnico3));
+        tecnicoRepository.saveAll(Arrays.asList(tecnico, tecnico1, tecnico2, tecnico3));
         clienteRepository.saveAll(Arrays.asList(cliente));
-        chamadoRepository.saveAll(Arrays.asList(ch1));
-        chamadoRepository.saveAll(Arrays.asList(ch2));
-        chamadoRepository.saveAll(Arrays.asList(ch3));
+        chamadoRepository.saveAll(Arrays.asList(ch1, ch2, ch3));
     }
 }

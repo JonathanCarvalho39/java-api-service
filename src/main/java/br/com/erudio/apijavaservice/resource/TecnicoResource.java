@@ -2,6 +2,7 @@ package br.com.erudio.apijavaservice.resource;
 
 import br.com.erudio.apijavaservice.domain.Cliente;
 import br.com.erudio.apijavaservice.domain.Tecnico;
+import br.com.erudio.apijavaservice.dtos.TecnicoDTO;
 import br.com.erudio.apijavaservice.services.ClienteService;
 import br.com.erudio.apijavaservice.services.TecnicoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,9 +28,9 @@ public class TecnicoResource {
             @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados")
     })
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Tecnico> findById(@RequestParam("id") Integer id) {
+    public ResponseEntity<TecnicoDTO> findById(@PathVariable("id") Integer id) {
         Tecnico obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new TecnicoDTO(obj));
     }
 
 }
