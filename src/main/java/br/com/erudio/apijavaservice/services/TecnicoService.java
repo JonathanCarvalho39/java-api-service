@@ -2,6 +2,7 @@ package br.com.erudio.apijavaservice.services;
 
 import br.com.erudio.apijavaservice.domain.Tecnico;
 import br.com.erudio.apijavaservice.repositores.TecnicoRepository;
+import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,6 @@ public class TecnicoService {
 
     public Tecnico findById(Integer id) {
         Optional<Tecnico> obj = repository.findById(id);
-        return obj.orElse(null);
+        return obj.orElseThrow(() -> new ObjectNotFoundExeption("Técnico não encontrado: " + id));
     }
 }
