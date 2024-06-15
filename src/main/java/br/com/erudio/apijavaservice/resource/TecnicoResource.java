@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/tecnico")
+@RequestMapping(value = "api/v1/tecnico")
 public class TecnicoResource {
 
     @Autowired
