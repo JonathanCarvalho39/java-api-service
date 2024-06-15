@@ -2,8 +2,9 @@ package br.com.erudio.apijavaservice.domain;
 
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
 
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
