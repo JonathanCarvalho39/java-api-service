@@ -24,19 +24,19 @@ public class DBService {
     private ChamadoRepository chamadoRepository;
 
     public void instaciaDB() {
-        Tecnico tecnico = new Tecnico(null, "Jonathan", "42567079801", "jonathan@gmail.com", "123");
+        Tecnico tecnico = new Tecnico(null, "Jonathan", "271.075.670-63", "jonathan@gmail.com", "123");
         tecnico.addPerfil(Perfil.ADMIN);
 
-        Tecnico tecnico1 = new Tecnico(null, "Andre", "42567079802", "andre@gmail.com", "123");
+        Tecnico tecnico1 = new Tecnico(null, "Andre", "347.560.120-60", "andre@gmail.com", "123");
         tecnico1.addPerfil(Perfil.ADMIN);
 
-        Tecnico tecnico2 = new Tecnico(null, "José", "42567079803", "jose@gmail.com", "123");
+        Tecnico tecnico2 = new Tecnico(null, "José", "449.850.450-04", "jose@gmail.com", "123");
         tecnico2.addPerfil(Perfil.ADMIN);
 
-        Tecnico tecnico3 = new Tecnico(null, "Fabio", "42567079804", "fabio@gmail.com", "123");
+        Tecnico tecnico3 = new Tecnico(null, "Fabio", "736.229.120-57", "fabio@gmail.com", "123");
         tecnico3.addPerfil(Perfil.ADMIN);
 
-        Cliente cliente = new Cliente(null, "Pedro", "12345676545", "pedro@gmail.com", "123");
+        Cliente cliente = new Cliente(null, "Pedro", "634.394.270-05", "pedro@gmail.com", "123");
 
         Chamado ch1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-01", "Primeiro chamado", tecnico, cliente);
         Chamado ch2 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado-02", "Segundo chamado", tecnico1, cliente);
