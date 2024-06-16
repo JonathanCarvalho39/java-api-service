@@ -27,16 +27,24 @@ public class ClienteResource {
     private ClienteService service;
 
     @Operation(summary = "Busca de Cliente por id", method = "GET")
-    @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Busca realizada com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ClienteDTO.class), examples = @ExampleObject(value = """
-            {
-                "id": 1,
-                "nome": "João Silva",
-                "cpf": "000.000.000-00",
-                "email": "joao.silva@email.com",
-                "senha": "123",
-                "perfis": ["ADMIN"],
-                "dataCriacao": "2024-06-16"
-            }"""))), @ApiResponse(responseCode = "404", description = "Cliente não encontrado", content = @Content(mediaType = "application/json", examples = @ExampleObject("""
+    @ApiResponses(value = {@ApiResponse(
+            responseCode = "200",
+            description = "Busca realizada com sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(
+                            implementation = ClienteDTO.class),
+                    examples = @ExampleObject(
+                            value = """
+                                    {
+                                        "id": 1,
+                                        "nome": "João Silva",
+                                        "cpf": "000.000.000-00",
+                                        "email": "joao.silva@email.com",
+                                        "senha": "123",
+                                        "perfis": ["ADMIN"],
+                                        "dataCriacao": "2024-06-16"
+                                    }"""))), @ApiResponse(responseCode = "404", description = "Cliente não encontrado", content = @Content(mediaType = "application/json", examples = @ExampleObject("""
             {
                 "timestamp": 1718503514901,
                 "status": 404,

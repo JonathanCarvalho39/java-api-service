@@ -4,7 +4,6 @@ import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.validator.constraints.br.CPF;
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;

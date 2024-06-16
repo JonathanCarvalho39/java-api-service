@@ -1,7 +1,6 @@
 package br.com.erudio.apijavaservice.dtos;
 
 import br.com.erudio.apijavaservice.domain.Cliente;
-import br.com.erudio.apijavaservice.domain.Tecnico;
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 

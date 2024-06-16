@@ -1,10 +1,10 @@
 package br.com.erudio.apijavaservice.services;
 
-import br.com.erudio.apijavaservice.domain.Pessoa;
 import br.com.erudio.apijavaservice.domain.Cliente;
+import br.com.erudio.apijavaservice.domain.Pessoa;
 import br.com.erudio.apijavaservice.dtos.ClienteDTO;
-import br.com.erudio.apijavaservice.repositores.PessoaRepository;
 import br.com.erudio.apijavaservice.repositores.ClienteRepository;
+import br.com.erudio.apijavaservice.repositores.PessoaRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
