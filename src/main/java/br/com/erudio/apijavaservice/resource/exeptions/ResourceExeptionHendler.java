@@ -8,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -44,6 +45,7 @@ public class ResourceExeptionHendler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StanderdError> validException(
             MethodArgumentNotValidException ex,
@@ -59,6 +61,22 @@ public class ResourceExeptionHendler {
         for (FieldError x : ex.getBindingResult().getFieldErrors()) {
             error.addError(x.getField(), x.getDefaultMessage());
         }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<StanderdError> validException(
+            MethodArgumentTypeMismatchException ex,
+            HttpServletRequest request) {
+
+        ValidationError error = new ValidationError(
+                System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Parametro invalido",
+                "Erro, parametros invalidos",
+                request.getRequestURI());
+
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
