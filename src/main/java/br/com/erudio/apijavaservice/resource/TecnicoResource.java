@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,7 +59,7 @@ public class TecnicoResource {
             @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados")
     })
     @PostMapping
-    public ResponseEntity<TecnicoDTO> create(@RequestBody TecnicoDTO obj) {
+    public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO obj) {
         Tecnico newObj = service.create(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).build();

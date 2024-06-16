@@ -4,6 +4,7 @@ import br.com.erudio.apijavaservice.domain.Tecnico;
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,9 +15,13 @@ public class TecnicoDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     protected Integer id;
+    @NotNull(message = "O campo NOME é requirido")
     protected String nome;
+    @NotNull(message = "O campo CPF é requirido")
     protected String cpf;
+    @NotNull(message = "O campo E-MAIL é requirido")
     protected String email;
+    @NotNull(message = "O campo SENHA é requirido")
     protected String senha;
     protected Set<Integer> perfis = new HashSet();
 
