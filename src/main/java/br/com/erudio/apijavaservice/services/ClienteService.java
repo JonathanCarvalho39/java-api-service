@@ -8,6 +8,7 @@ import br.com.erudio.apijavaservice.repositores.PessoaRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -23,6 +24,9 @@ public class ClienteService {
     @Autowired
     private PessoaRepository pessoaRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     public Cliente findById(Integer id) {
         Optional<Cliente> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundExeption("Cliente não encontrado: " + id));
@@ -34,6 +38,7 @@ public class ClienteService {
 
     public Cliente create(ClienteDTO obj) {
         obj.setId(null);
+        obj.setSenha(encoder.encode(obj.getSenha()));
         validaCpfEEmail(obj);
         Cliente newObj = new Cliente(obj);
         return repository.save(newObj);
@@ -41,7 +46,7 @@ public class ClienteService {
 
     public Cliente update(Integer id, @Valid ClienteDTO objDto) {
         objDto.setId(id);
-        Cliente oldObj = findById(id);
+        Cliente oldObj;
         validaCpfEEmail(objDto);
         oldObj = new Cliente(objDto);
         return repository.save(oldObj);
