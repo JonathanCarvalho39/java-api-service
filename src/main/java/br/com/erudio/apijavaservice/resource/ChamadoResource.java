@@ -140,7 +140,7 @@ public class ChamadoResource {
                             "path": "/api/v1/chamados",
                             "fieldMessages": []
                             }
-                                        """))), @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados")})
+                            """))), @ApiResponse(responseCode = "500", description = "Erro ao buscar os dados")})
     @GetMapping
     public ResponseEntity<List<ChamadoDTO>> findByAll() {
         List<Chamado> listChamado = service.findByAll();
