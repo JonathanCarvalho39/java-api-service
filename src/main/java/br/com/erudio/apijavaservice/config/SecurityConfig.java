@@ -29,12 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Desabilitar cabeçalhos de frame para acessar o console H2
         if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
             http.headers().frameOptions().disable();
         }
 
-        http.cors().and().csrf().disable(); // Corrigir a desabilitação de CSRF
+        http.cors().and().csrf().disable();
 
         http.authorizeRequests()
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
