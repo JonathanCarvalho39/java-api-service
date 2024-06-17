@@ -12,18 +12,19 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter {
 
-    private final AuthenticationManager authenticationManager;
-    private final JWTUtil jwtUtil;
+    private AuthenticationManager authenticationManager;
+    private JWTUtil jwtUtil;
 
 
     public JWTAuthencationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
+        super();
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/v1/login");
     }
 
     @Override
@@ -31,7 +32,7 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         try {
             CredenciaisDTO credenciaisDTO = new ObjectMapper().readValue(request.getInputStream(), CredenciaisDTO.class);
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    credenciaisDTO.getEmail(), credenciaisDTO.getSenha()
+                    credenciaisDTO.getEmail(), credenciaisDTO.getSenha(), new ArrayList<>()
             );
             return authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {
@@ -56,7 +57,6 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
 
     private CharSequence json() {
         long date = new Date().getTime();
-
         return """
                 {
                     timestamp: %s,

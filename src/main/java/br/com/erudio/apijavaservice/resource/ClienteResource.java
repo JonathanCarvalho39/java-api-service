@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -121,6 +122,7 @@ public class ClienteResource {
                 "dataCriacao": "2024-06-16"
             }
             """))), @ApiResponse(responseCode = "422", description = "Dados de requisição inválidos"), @ApiResponse(responseCode = "400", description = "Dados de parâmetros inválidos"), @ApiResponse(responseCode = "500", description = "Erro ao criar os dados")})
+    @PreAuthorize("hasAnyRole(ADMIN)")
     @PostMapping
     public ResponseEntity<ClienteDTO> create(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Atualização de Cliente", content = @Content(schema = @Schema(implementation = ClienteDTO.class), examples = @ExampleObject(value = """
             {
@@ -159,6 +161,7 @@ public class ClienteResource {
                 "path": "/api/v1/tecnicos/a",
                 "fieldMessages": []
             }""")))})
+    @PreAuthorize("hasAnyRole(ADMIN)")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Atualização de Cliente", content = @Content(schema = @Schema(implementation = ClienteDTO.class), examples = @ExampleObject(value = """
             {
@@ -173,6 +176,8 @@ public class ClienteResource {
 
     @Operation(summary = "Deletar Cliente", method = "DELETE")
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Cliente deletado com sucesso", content = @Content(mediaType = "application/json", examples = @ExampleObject())), @ApiResponse(responseCode = "500", description = "Erro ao deletar os dados")})
+
+    @PreAuthorize("hasAnyRole(ADMIN)")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         service.delete(id);

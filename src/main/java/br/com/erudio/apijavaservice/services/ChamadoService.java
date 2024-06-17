@@ -1,7 +1,6 @@
 package br.com.erudio.apijavaservice.services;
 
 import br.com.erudio.apijavaservice.domain.Chamado;
-import br.com.erudio.apijavaservice.dtos.ChamadoDTO;
 import br.com.erudio.apijavaservice.repositores.ChamadoRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;

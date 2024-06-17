@@ -5,14 +5,13 @@ import br.com.erudio.apijavaservice.repositores.PessoaRepository;
 import br.com.erudio.apijavaservice.security.UserSS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
 
     @Autowired
     private PessoaRepository pessoaRepository;

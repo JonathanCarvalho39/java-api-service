@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 
 public class UserSS implements UserDetails {
-    private static final long sirialVersionUID = 1L;
 
     private Integer id;
     private String email;
