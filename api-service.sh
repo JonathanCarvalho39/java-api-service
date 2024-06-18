@@ -93,6 +93,7 @@ ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
 if [[ "$ambiente" == "dev" ]]; then
+    sudo docker pull jonathancarvalho039/mysql-servico
     sudo docker run -d
     --name mysql-service
     --network host
