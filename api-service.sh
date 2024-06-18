@@ -77,7 +77,7 @@ docker run -d \
 
 # Esperar alguns segundos para garantir que o MySQL esteja operacional
 echo "Esperando o MySQL iniciar..."
-sleep 10
+sleep 5
 
 # Subir o container Java
 docker run -d \
@@ -87,5 +87,10 @@ docker run -d \
   jonathancarvalho039/api-server:17 \
   java -jar /api-server.jar
 
-echo "Containers iniciados com sucesso."
+echo "Esperando Aplicação iniciar..."
+sleep 10
+
+echo "Aplicação iniciada com sucesso! host de acesso:"
+echo "$(curl -s ifconfig.me):8080"
+
 
