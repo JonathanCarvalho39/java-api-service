@@ -66,6 +66,8 @@ docker --version
 echo "Docker Compose version:"
 docker-compose --version
 
+read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
+
 # Subir o container MySQL
 docker run -d \
   --name mysql-service \
@@ -83,15 +85,17 @@ sleep 5
 docker run -d \
   --name api-server \
   --network host \
-  -e SPRING_PROFILES_ACTIVE=dev \
+  -e SPRING_PROFILES_ACTIVE=$ambiente \
   jonathancarvalho039/api-server:17 \
   java -jar /api-server.jar
 
+echo "Ambiente de $ambiente selecionado."
 echo "Esperando Aplicação iniciar..."
 sleep 10
 
 echo "Aplicação iniciada com sucesso! host de acesso:"
 
+echo "Host principal :  $(curl -s ifconfig.me):8080/api/v1/"
 echo "Login :  $(curl -s ifconfig.me):8080/api/v1/login"
 echo "Doc Swagger:  $(curl -s ifconfig.me):8080/swagger-ui/index.html"
 
