@@ -93,13 +93,16 @@ read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
 ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
-sudo docker run -d \
-  --name mysql-service \
-  --network host \
-  -e MYSQL_ROOT_PASSWORD=urubu100 \
-  -e MYSQL_USER=aluno1 \
-  -e MYSQL_PASSWORD=123 \
-  jonathancarvalho039/mysql-servico:5.7
+if [[ "$ambiente" == "dev" ]]; then
+    sudo docker pull jonathancarvalho039/mysql-servico:5.7
+    sudo docker run -d \
+      --name mysql-service \
+      --network host \
+      -e MYSQL_ROOT_PASSWORD=urubu100 \
+      -e MYSQL_USER=aluno1 \
+      -e MYSQL_PASSWORD=123 \
+      jonathancarvalho039/mysql-servico:5.7
+fi
 
 # Esperar alguns segundos para garantir que o MySQL esteja operacional
 echo "Esperando o MySQL iniciar..."
