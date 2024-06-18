@@ -11,10 +11,16 @@ then
     sudo apt-get update
     
     clear
+    echo "-----------------------------------------------------"
+    echo "|               Instalando Docker...                |"
+    echo "-----------------------------------------------------"
     # Remover versões antigas do Docker
     sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
     clear
+    echo "-----------------------------------------------------"
+    echo "|               Instalando Docker...                |"
+    echo "-----------------------------------------------------"
     # Instalar pacotes necessários para usar o repositório APT sobre HTTPS
     sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
@@ -25,10 +31,16 @@ then
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
     clear
+    echo "-----------------------------------------------------"
+    echo "|               Instalando Docker...                |"
+    echo "-----------------------------------------------------"
     # Atualizar pacotes do APT novamente para incluir pacotes do Docker
     sudo apt-get update
 
     clear
+    echo "-----------------------------------------------------"
+    echo "|               Instalando Docker...                |"
+    echo "-----------------------------------------------------"
     # Instalar Docker CE
     sudo apt-get install -y docker-ce
 
