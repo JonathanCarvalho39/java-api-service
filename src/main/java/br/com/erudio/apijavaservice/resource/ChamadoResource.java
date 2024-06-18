@@ -11,10 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -146,6 +144,21 @@ public class ChamadoResource {
         List<Chamado> listChamado = service.findByAll();
         List<ChamadoDTO> listDTO = listChamado.stream().map(obj -> new ChamadoDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @Operation(summary = "Deletar Chamado", method = "DELETE")
+    @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Chamado deletado com sucesso",
+            content = @Content(
+                    mediaType = "application/json",
+                    examples = @ExampleObject())),
+            @ApiResponse(responseCode = "500",
+                    description = "Erro ao deletar os dados")})
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

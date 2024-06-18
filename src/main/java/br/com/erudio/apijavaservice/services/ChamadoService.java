@@ -13,14 +13,19 @@ import java.util.Optional;
 public class ChamadoService {
 
     @Autowired
-    private ChamadoRepository repository;
+    private ChamadoRepository chamadorepository;
 
     public Chamado findById(Integer id) {
-        Optional<Chamado> obj = repository.findById(id);
+        Optional<Chamado> obj = chamadorepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundExeption("Chamado não encontrado: " + id));
     }
 
     public List<Chamado> findByAll() {
-        return repository.findAll();
+        return chamadorepository.findAll();
+    }
+
+    public void delete(Integer id) {
+        Chamado obj = findById(id);
+        chamadorepository.deleteById(id);
     }
 }
