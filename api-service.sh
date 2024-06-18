@@ -93,7 +93,7 @@ read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
 ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
-docker run -d \
+sudo docker run -d \
   --name mysql-service \
   --network host \
   -e MYSQL_ROOT_PASSWORD=urubu100 \
@@ -106,13 +106,7 @@ echo "Esperando o MySQL iniciar..."
 sleep 5
 
 # Subir o container Java com o ambiente especificado e expor a porta 8080
-docker run -d \
-  --name api-server \
-  --network host \
-  -p 8080:8080 \
-  -e SPRING_PROFILES_ACTIVE=$ambiente \
-  jonathancarvalho039/api-server:17 \
-  java -jar /api-server.jar
+sudo docker run -d --name api-server -p 8080:8080 -e SPRING_PROFILES_ACTIVE=$ambiente jonathancarvalho039/api-server:17 java -jar /api-server.jar
 
 echo "Ambiente de $ambiente selecionado."
 echo "Esperando Aplicação iniciar..."
