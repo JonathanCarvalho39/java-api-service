@@ -78,36 +78,41 @@ docker --version
 echo "Docker Compose version:"
 docker-compose --version
 
+# Função para verificar se a entrada está correta
 check_input() {
     local input=$1
-    while [[ -z "$input" || ! "$input" =~ ^(dev|test)$ ]]; do
-        echo "Entrada inválida. Por favor, digite 'dev' ou 'test'."
-        read -p "Digite o ambiente que deseja entrar (ex: dev, test): " input
+    while [[ -z "$input" || ! "$input" =~ ^(dev|prod)$ ]]; do
+        echo "Entrada inválida. Por favor, digite 'dev' ou 'prod'."
+        read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " input
     done
     echo $input
 }
 
 # Perguntar ao usuário qual ambiente deseja entrar
-read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
+read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " ambiente
 ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
-if [[ "$ambiente" == "dev" ]]; then
-    sudo docker pull jonathancarvalho039/mysql-servico
-    sudo docker run -d
-    --name mysql-service
-    --network host
-    -e MYSQL_ROOT_PASSWORD=urubu100
-    -e MYSQL_USER=aluno1
-    -e MYSQL_PASSWORD=123
-    jonathancarvalho039/mysql-servico:5.7
+docker run -d \
+  --name mysql-service \
+  --network host \
+  -e MYSQL_ROOT_PASSWORD=urubu100 \
+  -e MYSQL_USER=aluno1 \
+  -e MYSQL_PASSWORD=123 \
+  jonathancarvalho039/mysql-servico:5.7
+
+# Esperar alguns segundos para garantir que o MySQL esteja operacional
 echo "Esperando o MySQL iniciar..."
 sleep 5
-fi
 
-# Subir o container Java
-sudo docker pull jonathancarvalho039/api-server
-sudo docker run -d --name api-server -p 8080:8080 -e SPRING_PROFILES_ACTIVE=$ambiente jonathancarvalho039/api-server:17 java -jar /api-server.jar
+# Subir o container Java com o ambiente especificado e expor a porta 8080
+docker run -d \
+  --name api-server \
+  --network host \
+  -p 8080:8080 \
+  -e SPRING_PROFILES_ACTIVE=$ambiente \
+  jonathancarvalho039/api-server:17 \
+  java -jar /api-server.jar
 
 echo "Ambiente de $ambiente selecionado."
 echo "Esperando Aplicação iniciar..."
