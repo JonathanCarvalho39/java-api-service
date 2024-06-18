@@ -88,7 +88,7 @@ check_input() {
 }
 
 # Perguntar ao usuário qual ambiente deseja entrar
-read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " ambiente
+read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
 ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
