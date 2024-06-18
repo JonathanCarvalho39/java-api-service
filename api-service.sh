@@ -9,10 +9,12 @@ then
 
     # Atualizar pacotes existentes
     sudo apt-get update
-
+    
+    clear
     # Remover versões antigas do Docker
     sudo apt-get remove -y docker docker-engine docker.io containerd runc
 
+    clear
     # Instalar pacotes necessários para usar o repositório APT sobre HTTPS
     sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
 
@@ -22,21 +24,18 @@ then
     # Adicionar o repositório do Docker às fontes do APT
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
+    clear
     # Atualizar pacotes do APT novamente para incluir pacotes do Docker
     sudo apt-get update
 
+    clear
     # Instalar Docker CE
     sudo apt-get install -y docker-ce
 
     # Adicionar o usuário atual ao grupo Docker
     sudo usermod -aG docker $USER
-
+    clear
     echo "Docker foi instalado com sucesso."
-
-    newgrp docker
-
-    sudo systemctl restart docker
-
 else
     echo "Docker já está instalado."
 fi
@@ -44,10 +43,6 @@ fi
 # Verificar se Docker Compose está instalado
 if ! which docker-compose &> /dev/null
 then
-    echo "-----------------------------------------------------"
-    echo "|           Instalando Docker Compose...            |"
-    echo "-----------------------------------------------------"
-
     # Instalar Docker Compose
     sudo curl -L "https://github.com/docker/compose/releases/download/$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
@@ -71,41 +66,26 @@ docker --version
 echo "Docker Compose version:"
 docker-compose --version
 
-# Criar o arquivo docker-compose.yml
-cat <<EOF > docker-compose.yml
-version: '3.8'
+# Subir o container MySQL
+docker run -d \
+  --name mysql-service \
+  --network host \
+  -e MYSQL_ROOT_PASSWORD=urubu100 \
+  -e MYSQL_USER=aluno1 \
+  -e MYSQL_PASSWORD=123 \
+  jonathancarvalho039/mysql-servico:5.7
 
-services:
-  mysql-service:
-    container_name: mysql-service
-    image: jonathancarvalho039/mysql-servico:5.7
-    restart: always
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: urubu100
-      MYSQL_USER: aluno1
-      MYSQL_PASSWORD: 123
-    network_mode: host
-
-  api-server:
-    container_name: api-server
-    image: jonathancarvalho039/api-server:17
-    restart: always
-    depends_on:
-      - mysql-service
-    ports:
-      - "8080:8080"
-    environment:
-      SPRING_PROFILES_ACTIVE: dev
-    command: java -jar /api-server.jar
-EOF
-
-docker-compose up
-echo "Aplicação de Pé"
-
-# Esperar alguns segundos para garantir que os serviços estejam totalmente iniciados
+# Esperar alguns segundos para garantir que o MySQL esteja operacional
+echo "Esperando o MySQL iniciar..."
 sleep 10
 
-# Remover o arquivo docker-compose.yml
-rm docker-compose.yml
+# Subir o container Java
+docker run -d \
+  --name api-server \
+  --network host \
+  -e SPRING_PROFILES_ACTIVE=dev \
+  jonathancarvalho039/api-server:17 \
+  java -jar /api-server.jar
+
+echo "Containers iniciados com sucesso."
+
