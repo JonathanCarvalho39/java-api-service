@@ -105,7 +105,7 @@ sleep 5
 fi
 
 # Subir o container Java
-
+sudo docker pull jonathancarvalho039/api-server
 sudo docker run -d --name api-server -p 8080:8080 -e SPRING_PROFILES_ACTIVE=$ambiente jonathancarvalho039/api-server:17 java -jar /api-server.jar
 
 echo "Ambiente de $ambiente selecionado."
