@@ -81,15 +81,15 @@ docker-compose --version
 # Função para verificar se a entrada está correta
 check_input() {
     local input=$1
-    while [[ -z "$input" || ! "$input" =~ ^(dev|prod)$ ]]; do
-        echo "Entrada inválida. Por favor, digite 'dev' ou 'prod'."
-        read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " input
+    while [[ -z "$input" || ! "$input" =~ ^(dev|test)$ ]]; do
+        echo "Entrada inválida. Por favor, digite 'dev' ou 'test'."
+        read -p "Digite o ambiente que deseja entrar (ex: dev, test): " input
     done
     echo $input
 }
 
 # Perguntar ao usuário qual ambiente deseja entrar
-read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " ambiente
+read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
 ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
