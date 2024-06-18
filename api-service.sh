@@ -109,6 +109,7 @@ sleep 5
 sudo docker run -d \
   --name api-server \
   --network host \
+  -p 8080:8080 \
   -e SPRING_PROFILES_ACTIVE=$ambiente \
   jonathancarvalho039/api-server:17 \
   java -jar /api-server.jar
