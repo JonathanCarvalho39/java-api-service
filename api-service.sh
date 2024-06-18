@@ -91,6 +91,9 @@ echo "Esperando Aplicação iniciar..."
 sleep 10
 
 echo "Aplicação iniciada com sucesso! host de acesso:"
-echo "$(curl -s ifconfig.me):8080"
+
+echo "Login :  $(curl -s ifconfig.me):8080/api/v1/login"
+echo "Doc Swagger:  $(curl -s ifconfig.me):8080/swagger-ui/index.html"
+
 
 
