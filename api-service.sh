@@ -101,7 +101,7 @@ services:
     command: java -jar /api-server.jar
 EOF
 
-docker-compose up -d
+docker-compose up
 echo "Aplicação de Pé"
 
 # Esperar alguns segundos para garantir que os serviços estejam totalmente iniciados
