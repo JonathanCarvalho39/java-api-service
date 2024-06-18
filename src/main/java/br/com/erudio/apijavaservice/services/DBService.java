@@ -38,16 +38,17 @@ public class DBService {
         tecnico2.addPerfil(Perfil.ADMIN);
 
         Tecnico tecnico3 = new Tecnico(null, "Fabio", "736.229.120-57", "fabio@gmail.com", encoder.encode("123"));
-        tecnico3.addPerfil(Perfil.ADMIN);
+//        tecnico3.addPerfil(Perfil.ADMIN);
 
         Cliente cliente = new Cliente(null, "Pedro", "634.394.270-05", "pedro@gmail.com", encoder.encode("123"));
+        Cliente client2 = new Cliente(null, "Julio", "477.693.910-08", "julio@gmail.com", encoder.encode("123"));
 
         Chamado ch1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-01", "Primeiro chamado", tecnico, cliente);
         Chamado ch2 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado-02", "Segundo chamado", tecnico1, cliente);
-        Chamado ch3 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-03", "Terceiro chamado", tecnico2, cliente);
+        Chamado ch3 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-03", "Terceiro chamado", tecnico3, cliente);
 
         tecnicoRepository.saveAll(Arrays.asList(tecnico, tecnico1, tecnico2, tecnico3));
-        clienteRepository.saveAll(Arrays.asList(cliente));
+        clienteRepository.saveAll(Arrays.asList(cliente, client2));
         chamadoRepository.saveAll(Arrays.asList(ch1, ch2, ch3));
     }
 }

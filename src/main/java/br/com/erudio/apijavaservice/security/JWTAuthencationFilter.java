@@ -25,6 +25,7 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         super();
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
+        setFilterProcessesUrl("/api/v1/login");
     }
 
     @Override
@@ -45,7 +46,7 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         String userName = ((UserSS) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(userName);
         response.setHeader("access-control-expose-headers", "Authorization");
-        response.setHeader("Authorization", "Bearer" + token);
+        response.setHeader("Authorization", "Bearer " + token);
     }
 
     @Override

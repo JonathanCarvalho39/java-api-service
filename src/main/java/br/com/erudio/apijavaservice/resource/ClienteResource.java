@@ -122,13 +122,13 @@ public class ClienteResource {
                 "dataCriacao": "2024-06-16"
             }
             """))), @ApiResponse(responseCode = "422", description = "Dados de requisição inválidos"), @ApiResponse(responseCode = "400", description = "Dados de parâmetros inválidos"), @ApiResponse(responseCode = "500", description = "Erro ao criar os dados")})
-    @PreAuthorize("hasAnyRole(ADMIN)")
     @PostMapping
     public ResponseEntity<ClienteDTO> create(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Atualização de Cliente", content = @Content(schema = @Schema(implementation = ClienteDTO.class), examples = @ExampleObject(value = """
             {
-                "nome": "Adicionar Atualizado",
-                "cpf": "000.000.000-00",
-                "email": "tecnico.atualizado@email.com",
+                "nome": "felipe",
+                "cpf": "957.429.090-55",
+                "email": "felipe.criado@email.com",
+                "senha": "123",
                 "perfis": [0, 1, 2]
             }"""))) @Valid @RequestBody ClienteDTO obj) {
         Cliente newObj = service.create(obj);
@@ -161,7 +161,6 @@ public class ClienteResource {
                 "path": "/api/v1/tecnicos/a",
                 "fieldMessages": []
             }""")))})
-    @PreAuthorize("hasAnyRole(ADMIN)")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> update(@PathVariable Integer id, @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Atualização de Cliente", content = @Content(schema = @Schema(implementation = ClienteDTO.class), examples = @ExampleObject(value = """
             {
@@ -177,7 +176,6 @@ public class ClienteResource {
     @Operation(summary = "Deletar Cliente", method = "DELETE")
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Cliente deletado com sucesso", content = @Content(mediaType = "application/json", examples = @ExampleObject())), @ApiResponse(responseCode = "500", description = "Erro ao deletar os dados")})
 
-    @PreAuthorize("hasAnyRole(ADMIN)")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         service.delete(id);

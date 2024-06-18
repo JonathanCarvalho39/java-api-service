@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -113,12 +114,15 @@ public class TecnicoResource {
                 "dataCriacao": "2024-06-16"
             }
             """))), @ApiResponse(responseCode = "422", description = "Dados de requisição inválidos"), @ApiResponse(responseCode = "400", description = "Dados de parâmetros inválidos"), @ApiResponse(responseCode = "500", description = "Erro ao criar os dados")})
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<TecnicoDTO> create(@io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Atualização de Técnico", content = @Content(schema = @Schema(implementation = TecnicoDTO.class), examples = @ExampleObject(value = """
             {
-                "nome": "Adicionar Atualizado",
-                "cpf": "000.000.000-00",
-                "email": "tecnico.atualizado@email.com",
+               "nome": "carlos",
+                "cpf": "331.587.650-98",
+                "email": "carlos.criado@email.com",
+                "senha": "123",
                 "perfis": [0, 1, 2]
             }"""))) @Valid @RequestBody TecnicoDTO obj) {
         Tecnico newObj = service.create(obj);
@@ -126,6 +130,7 @@ public class TecnicoResource {
         return ResponseEntity.created(uri).body(new TecnicoDTO(newObj));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @Operation(summary = "Atualizar Técnico", method = "PUT")
     @ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Atualização realizada com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(implementation = TecnicoDTO.class), examples = @ExampleObject(value = """
             {
@@ -165,6 +170,7 @@ public class TecnicoResource {
 
     @Operation(summary = "Deletar Técnico", method = "DELETE")
     @ApiResponses(value = {@ApiResponse(responseCode = "204", description = "Técnico deletado com sucesso", content = @Content(mediaType = "application/json", examples = @ExampleObject())), @ApiResponse(responseCode = "500", description = "Erro ao deletar os dados")})
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Integer id) {
         service.delete(id);
