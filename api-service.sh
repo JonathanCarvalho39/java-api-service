@@ -66,10 +66,21 @@ docker --version
 echo "Docker Compose version:"
 docker-compose --version
 
-read -p "Digite o ambiente que deseja entrar (ex: dev, test): " ambiente
+check_input() {
+    local input=$1
+    while [[ -z "$input" || ! "$input" =~ ^(dev|test)$ ]]; do
+        echo "Entrada inválida. Por favor, digite 'dev' ou 'test'."
+        read -p "Digite o ambiente que deseja entrar (ex: dev, test): " input
+    done
+    echo $input
+}
+
+# Perguntar ao usuário qual ambiente deseja entrar
+read -p "Digite o ambiente que deseja entrar (ex: dev, prod): " ambiente
+ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
-docker run -d \
+sudo docker run -d \
   --name mysql-service \
   --network host \
   -e MYSQL_ROOT_PASSWORD=urubu100 \
@@ -82,7 +93,8 @@ echo "Esperando o MySQL iniciar..."
 sleep 5
 
 # Subir o container Java
-docker run -d \
+
+sudo docker run -d \
   --name api-server \
   --network host \
   -e SPRING_PROFILES_ACTIVE=$ambiente \
