@@ -97,19 +97,18 @@ if [[ "$ambiente" == "dev" ]]; then
     sudo docker pull jonathancarvalho039/mysql-servico:5.7
     sudo docker run -d \
       --name mysql-service \
+      --restart always \
       --network host \
       -e MYSQL_ROOT_PASSWORD=urubu100 \
       -e MYSQL_USER=aluno1 \
       -e MYSQL_PASSWORD=123 \
       jonathancarvalho039/mysql-servico:5.7
+      echo "Esperando o MySQL iniciar..."
+      sleep 5
 fi
 
-# Esperar alguns segundos para garantir que o MySQL esteja operacional
-echo "Esperando o MySQL iniciar..."
-sleep 5
-
 # Subir o container Java com o ambiente especificado e expor a porta 8080
-sudo docker run -d --name api-server -p 8080:8080 -e SPRING_PROFILES_ACTIVE=$ambiente jonathancarvalho039/api-server:17 java -jar /api-server.jar
+sudo docker run -d --name api-server --restart always -p 8080:8080 -e SPRING_PROFILES_ACTIVE=$ambiente jonathancarvalho039/api-server:17 java -jar /api-server.jar
 
 echo "Ambiente de $ambiente selecionado."
 echo "Esperando Aplicação iniciar..."
