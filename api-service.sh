@@ -99,12 +99,13 @@ if [[ "$ambiente" == "dev" ]]; then
       --name mysql-service \
       --restart always \
       --network host \
+      -p 3306:3306 \  # Expor a porta 3306 do contêiner para a porta 3306 do host
       -e MYSQL_ROOT_PASSWORD=urubu100 \
       -e MYSQL_USER=aluno1 \
       -e MYSQL_PASSWORD=123 \
       jonathancarvalho039/mysql-servico:5.7
-      echo "Esperando o MySQL iniciar..."
-      sleep 5
+    echo "Esperando o MySQL iniciar..."
+    sleep 5
 fi
 
 # Subir o container Java com o ambiente especificado e expor a porta 8080
