@@ -94,15 +94,7 @@ ambiente=$(check_input "$ambiente")
 
 # Subir o container MySQL
 if [[ "$ambiente" == "dev" ]]; then
-    sudo docker run -d \
-      --name mysql-service \
-      --restart always \
-      --network host \
-      -p 3306:3306 \  # Expor a porta 3306 do contêiner para a porta 3306 do host
-      -e MYSQL_ROOT_PASSWORD=urubu100 \
-      -e MYSQL_USER=aluno1 \
-      -e MYSQL_PASSWORD=123 \
-      jonathancarvalho039/mysql-servico:5.7
+    sudo docker run -d --name mysql-service --restart always --network host -p 3306:3306 -e MYSQL_ROOT_PASSWORD=urubu100 -e MYSQL_USER=aluno1 -e MYSQL_PASSWORD=123 jonathancarvalho039/mysql-servico:5.7
     echo "Esperando o MySQL iniciar..."
     sleep 5
 fi
