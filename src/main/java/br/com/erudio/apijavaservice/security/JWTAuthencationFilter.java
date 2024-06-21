@@ -45,9 +45,15 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) {
         String userName = ((UserSS) authResult.getPrincipal()).getUsername();
         String token = jwtUtil.generateToken(userName);
-        response.setHeader("access-control-expose-headers", "Authorization");
+        response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Authorization", "Bearer " + token);
+        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.addHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
     }
+
+
+
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {

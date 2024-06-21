@@ -12,11 +12,11 @@ import java.util.Date;
 @Component
 public class JWTUtil {
 
-    @Value("${jwt.expiration}")
-    private Long expration;
+//    @Value("${jwt.expiration}")
+    private Long expration = 604800000L;
 
-    @Value("${jwt.secret}")
-    private String key;
+//    @Value("${jwt.secret}")
+    private String key = "StringUsadaParaGerarToken";
 
     public String generateToken(String email) {
         return Jwts.builder()
