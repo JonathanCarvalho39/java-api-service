@@ -1,8 +1,8 @@
 package br.com.erudio.apijavaservice.dtos;
 
 import br.com.erudio.apijavaservice.domain.Chamado;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 

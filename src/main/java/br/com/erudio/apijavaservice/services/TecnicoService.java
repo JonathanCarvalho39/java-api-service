@@ -6,12 +6,13 @@ import br.com.erudio.apijavaservice.dtos.TecnicoDTO;
 import br.com.erudio.apijavaservice.repositores.PessoaRepository;
 import br.com.erudio.apijavaservice.repositores.TecnicoRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
+
 import java.util.List;
 import java.util.Optional;
 

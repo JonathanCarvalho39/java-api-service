@@ -2,15 +2,15 @@ package br.com.erudio.apijavaservice.security;
 
 import br.com.erudio.apijavaservice.dtos.CredenciaisDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +25,6 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         super();
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/api/v1/login");
     }
 
     @Override
@@ -47,9 +46,6 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         String token = jwtUtil.generateToken(userName);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Authorization", "Bearer " + token);
-        response.addHeader("Access-Control-Allow-Origin", "http://localhost:4200");
-        response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.addHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
     }
 
 

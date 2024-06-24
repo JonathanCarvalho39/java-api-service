@@ -3,9 +3,9 @@ package br.com.erudio.apijavaservice.domain;
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import br.com.erudio.apijavaservice.dtos.ClienteDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

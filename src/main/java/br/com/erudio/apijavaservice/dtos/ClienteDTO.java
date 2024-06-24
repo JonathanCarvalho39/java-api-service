@@ -3,8 +3,8 @@ package br.com.erudio.apijavaservice.dtos;
 import br.com.erudio.apijavaservice.domain.Cliente;
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotNull;
 
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;

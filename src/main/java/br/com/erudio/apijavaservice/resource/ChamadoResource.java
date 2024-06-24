@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(value = "/api/v1/chamados")
+@RequestMapping(value = "/chamados")
 public class ChamadoResource {
 
     @Autowired

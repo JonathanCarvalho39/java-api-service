@@ -2,9 +2,10 @@ package br.com.erudio.apijavaservice.domain;
 
 import br.com.erudio.apijavaservice.domain.enums.Perfil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import org.hibernate.validator.constraints.br.CPF;
 
-import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Entity
 public abstract class Pessoa implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
