@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -25,6 +26,9 @@ public class ClienteResource {
 
     @Autowired
     private ClienteService service;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Operation(summary = "Busca de Cliente por id", method = "GET")
     @ApiResponses(value = {@ApiResponse(
@@ -106,7 +110,11 @@ public class ClienteResource {
     @GetMapping
     public ResponseEntity<List<ClienteDTO>> findAll() {
         List<Cliente> listTec = service.findAll();
-        List<ClienteDTO> listDTO = listTec.stream().map(obj -> new ClienteDTO(obj)).collect(Collectors.toList());
+        List<ClienteDTO> listDTO = listTec.stream().map(obj -> {
+            ClienteDTO dto = new ClienteDTO(obj);
+            dto.setSenha(obj.getSenha());
+            return dto;
+        }).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
     }
 
@@ -129,8 +137,9 @@ public class ClienteResource {
                 "email": "felipe.criado@email.com",
                 "senha": "123",
                 "perfis": [0, 1, 2]
-            }"""))) @Valid @RequestBody ClienteDTO obj) {
-        Cliente newObj = service.create(obj);
+            }"""))) @Valid @RequestBody ClienteDTO objDTO) {
+        objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+        Cliente newObj = service.create(objDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
         return ResponseEntity.created(uri).body(new ClienteDTO(newObj));
     }

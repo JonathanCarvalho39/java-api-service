@@ -46,10 +46,9 @@ public class JWTAuthencationFilter extends UsernamePasswordAuthenticationFilter 
         String token = jwtUtil.generateToken(userName);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         response.setHeader("Authorization", "Bearer " + token);
+        String rolePerfil = ((UserSS) authResult.getPrincipal()).getAuthorities().toString();
+        response.addHeader("Role-Perfil", rolePerfil);
     }
-
-
-
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {

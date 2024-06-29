@@ -48,6 +48,11 @@ public class TecnicoService {
     public Tecnico update(Integer id, @Valid TecnicoDTO objDto) {
         objDto.setId(id);
         Tecnico oldObj = findById(id);
+
+        if (!(objDto.getSenha() == oldObj.getSenha())) {
+            objDto.setSenha(encoder.encode(objDto.getSenha()));
+        }
+
         validaCpfEEmail(objDto);
         oldObj = new Tecnico(objDto);
         return repository.save(oldObj);
@@ -56,7 +61,7 @@ public class TecnicoService {
     public void delete(Integer id) {
         Tecnico obj = findById(id);
         if (obj.getChamados().size() > 0) {
-            throw new DataIntegrityViolationException("Tecnico possui chamados atrelados a ele!");
+            throw new DataIntegrityViolationException("Técnico possui chamados atrelados a ele!");
         }
         repository.deleteById(id);
     }

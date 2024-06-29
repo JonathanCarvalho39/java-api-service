@@ -25,6 +25,9 @@ public class TecnicoDTO implements Serializable {
     protected String senha;
     protected Set<Integer> perfis = new HashSet();
 
+    protected String especialidade;
+    protected Integer anosExp;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
@@ -42,7 +45,10 @@ public class TecnicoDTO implements Serializable {
         this.senha = obj.getSenha();
         this.perfis = obj.getPerfils().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = obj.getDataCriacao();
+        this.anosExp = obj.getAnosExp();
+        this.especialidade = obj.getEspecialidade();
         addPerfis(Perfil.CLIENTE);
+        addPerfis(Perfil.TECNICO);
     }
 
     public Integer getId() {
@@ -99,5 +105,21 @@ public class TecnicoDTO implements Serializable {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    public String getEspecialidade() {
+        return especialidade;
+    }
+
+    public void setEspecialidade(String especialidade) {
+        this.especialidade = especialidade;
+    }
+
+    public Integer getAnosExp() {
+        return anosExp;
+    }
+
+    public void setAnosExp(Integer anosExp) {
+        this.anosExp = anosExp;
     }
 }

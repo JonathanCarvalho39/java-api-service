@@ -2,6 +2,7 @@ package br.com.erudio.apijavaservice.resource.exeptions;
 
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +75,21 @@ public class ResourceExeptionHendler {
                 HttpStatus.BAD_REQUEST.value(),
                 "Parametro invalido",
                 "Erro, parametros invalidos",
+                request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<StanderdError> validException(
+            ConstraintViolationException ex,
+            HttpServletRequest request) {
+
+        ValidationError error = new ValidationError(
+                System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "CPF Inválido",
+                "CPF Inválido",
                 request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
