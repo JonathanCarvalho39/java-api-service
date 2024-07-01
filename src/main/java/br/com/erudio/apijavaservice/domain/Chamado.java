@@ -2,12 +2,18 @@ package br.com.erudio.apijavaservice.domain;
 
 import br.com.erudio.apijavaservice.domain.enums.Prioridade;
 import br.com.erudio.apijavaservice.domain.enums.Status;
+import br.com.erudio.apijavaservice.dtos.ChamadoDTO;
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Chamado implements Serializable {
@@ -16,10 +22,17 @@ public class Chamado implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDate dataAbertura = LocalDate.now();
-    private LocalDate dataFechamento;
-    private Prioridade prioridade;
-    private Status status;
+    private Date dataAbertura = new Date();
+    private Date dataFechamento;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "prioridade")
+    private Set<Integer> prioridade = new HashSet<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "status")
+    private Set<Integer> status = new HashSet<>();
+
     private String titulo;
     private String observacoes;
 
@@ -37,12 +50,34 @@ public class Chamado implements Serializable {
     public Chamado(Integer id, Prioridade prioridade, Status status, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
         super();
         this.id = id;
-        this.prioridade = prioridade;
-        this.status = status;
+        this.prioridade.add(prioridade.getCodigo());
+        this.status.add(status.getCodigo());
         this.titulo = titulo;
         this.observacoes = observacoes;
         this.tecnico = tecnico;
         this.cliente = cliente;
+    }
+
+    public Chamado(Integer id, String titulo, String observacoes, Tecnico tecnico, Cliente cliente) {
+        super();
+        this.id = id;
+        this.titulo = titulo;
+        this.observacoes = observacoes;
+        this.tecnico = tecnico;
+        this.cliente = cliente;
+    }
+
+    public Chamado(ChamadoDTO obj) {
+        super();
+        this.id = obj.getId();
+        this.titulo = obj.getTitulo();
+        this.dataAbertura = obj.getDataAbertura();
+        this.dataFechamento = obj.getDataFechamento();
+        this.observacoes = obj.getObservacoes();
+        this.tecnico = obj.getTecnico();
+        this.cliente = obj.getCliente();
+        this.prioridade = obj.getPrioridade().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
+        this.status = obj.getStatus().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
     }
 
     public Integer getId() {
@@ -85,35 +120,35 @@ public class Chamado implements Serializable {
         this.titulo = titulo;
     }
 
-    public Status getStatus() {
-        return status;
+    public Set<Status> getStatus() {
+        return status.stream().map(x -> Status.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void addStatus(Status status) {
+        this.status.add(status.getCodigo());
     }
 
-    public Prioridade getPrioridade() {
-        return prioridade;
+    public Set<Prioridade> getPrioridade() {
+        return prioridade.stream().map(x -> Prioridade.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void setPrioridade(Prioridade prioridade) {
-        this.prioridade = prioridade;
+    public void addPrioridade(Prioridade prioridade) {
+        this.prioridade.add(prioridade.getCodigo());
     }
 
-    public LocalDate getDataFechamento() {
+    public Date getDataFechamento() {
         return dataFechamento;
     }
 
-    public void setDataFechamento(LocalDate dataFechamento) {
+    public void setDataFechamento(Date dataFechamento) {
         this.dataFechamento = dataFechamento;
     }
 
-    public LocalDate getDataAbertura() {
+    public Date getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(LocalDate dataAbertura) {
+    public void setDataAbertura(Date dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 

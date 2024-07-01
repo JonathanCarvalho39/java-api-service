@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
+import static br.com.erudio.apijavaservice.domain.enums.Status.*;
+
 @Service
 public class DBService {
     @Autowired
@@ -61,9 +63,18 @@ public class DBService {
         Cliente cliente = new Cliente(null, "Pedro", "634.394.270-05", "pedro@gmail.com", encoder.encode("123"));
         Cliente client2 = new Cliente(null, "Julio", "477.693.910-08", "julio@gmail.com", encoder.encode("123"));
 
-        Chamado ch1 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-01", "Primeiro chamado", tecnico, cliente);
-        Chamado ch2 = new Chamado(null, Prioridade.BAIXA, Status.ENCERRADO, "Chamado-02", "Segundo chamado", tecnico1, cliente);
-        Chamado ch3 = new Chamado(null, Prioridade.MEDIA, Status.ANDAMENTO, "Chamado-03", "Terceiro chamado", tecnico3, cliente);
+        Chamado ch1 = new Chamado(null, "Chamado-01", "Primeiro chamado", tecnico, cliente);
+        ch1.addPrioridade(Prioridade.BAIXA);
+        ch1.addStatus(ABERTO);
+        ch1.addStatus(ANDAMENTO);
+        Chamado ch2 = new Chamado(null, "Chamado-02", "Segundo chamado", tecnico1, cliente);
+        ch2.addPrioridade(Prioridade.BAIXA);
+        ch2.addStatus(ABERTO);
+        ch2.addStatus(ANDAMENTO);
+        ch2.addStatus(ENCERRADO);
+        Chamado ch3 = new Chamado(null, "Chamado-03", "Terceiro chamado", tecnico3, cliente);
+        ch3.addPrioridade(Prioridade.MEDIA);
+        ch3.addStatus(ABERTO);
 
         tecnicoRepository.saveAll(Arrays.asList(tecnico, tecnico1, tecnico2, tecnico3, tecnico4, tecnico5, tecnico6, tecnico7, tecnico8, tecnico9));
         clienteRepository.saveAll(Arrays.asList(cliente, client2));

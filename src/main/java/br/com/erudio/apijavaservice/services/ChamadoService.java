@@ -1,6 +1,7 @@
 package br.com.erudio.apijavaservice.services;
 
 import br.com.erudio.apijavaservice.domain.Chamado;
+import br.com.erudio.apijavaservice.dtos.ChamadoDTO;
 import br.com.erudio.apijavaservice.repositores.ChamadoRepository;
 import br.com.erudio.apijavaservice.services.exeptions.ObjectNotFoundExeption;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class ChamadoService {
 
     public List<Chamado> findByAll() {
         return chamadorepository.findAll();
+    }
+
+    public Chamado create(ChamadoDTO objDTO) {
+        objDTO.setId(null);
+        Chamado newObj = new Chamado(objDTO);
+        return chamadorepository.save(newObj);
     }
 
     public void delete(Integer id) {

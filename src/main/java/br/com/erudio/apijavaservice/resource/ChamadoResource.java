@@ -9,11 +9,14 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -144,6 +147,13 @@ public class ChamadoResource {
         List<Chamado> listChamado = service.findByAll();
         List<ChamadoDTO> listDTO = listChamado.stream().map(obj -> new ChamadoDTO(obj)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<ChamadoDTO> create(@Valid @RequestBody ChamadoDTO objDTO) {
+        Chamado newObj = service.create(objDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
+        return ResponseEntity.created(uri).body(new ChamadoDTO(newObj));
     }
 
     @Operation(summary = "Deletar Chamado", method = "DELETE")
